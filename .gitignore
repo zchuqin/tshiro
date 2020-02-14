@@ -1,2 +1,6 @@
 # Project exclude paths
 /target/
+.idea/
+logs/
+src/test/
+tshiro.iml
