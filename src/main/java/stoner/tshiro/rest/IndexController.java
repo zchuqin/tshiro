@@ -1,5 +1,6 @@
 package stoner.tshiro.rest;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
@@ -16,11 +17,21 @@ public class IndexController {
         return "<!DOCTYPE html><html><head><meta charset=\"utf-8\"></head><body><div style=\"font-size:10em;\">" + status + "</div></body></html>";
     }
 
-    //注解验角色和权限
-    @RequiresPermissions("add")
     @RequestMapping("/index")
     @ResponseBody
     public String index() {
-        return "<!DOCTYPE html><html><head><meta charset=\"utf-8\"></head><body><div style=\"font-size:10em;\">index</div></body></html>";
+        System.out.println(SecurityUtils.getSubject().isRemembered());
+        System.out.println(SecurityUtils.getSubject().isAuthenticated());
+        Object principal = SecurityUtils.getSubject().getPrincipal();
+        return "<!DOCTYPE html><html><head><meta charset=\"utf-8\"></head><body><div style=\"font-size:10em;\">" + principal + "</div></body></html>";
+    }
+
+    @RequestMapping("/index1")
+    @ResponseBody
+    public String index1() {
+        System.out.println(SecurityUtils.getSubject().isRemembered());
+        System.out.println(SecurityUtils.getSubject().isAuthenticated());
+        Object principal = SecurityUtils.getSubject().getPrincipal();
+        return "<!DOCTYPE html><html><head><meta charset=\"utf-8\"></head><body><div style=\"font-size:10em;\">index1  " + principal + "</div></body></html>";
     }
 }
